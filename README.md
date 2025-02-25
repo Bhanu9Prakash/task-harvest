@@ -1,6 +1,7 @@
 
 # Task Harvest
-
+![image](https://github.com/user-attachments/assets/25c707d4-ad20-4e00-91f4-77d44d46312e)
+https://bhanu9prakash.github.io/task-harvest/
 A vintage-styled task management system with a focus on daily productivity tracking.
 
 ## Features
