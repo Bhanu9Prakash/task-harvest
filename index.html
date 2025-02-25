@@ -1,16 +1,508 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Task Harvest - Vintage Task Manager</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  Hello world
-  <script src="script.js"></script>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    ✓✓
+                </div>
+            </div>
+            <div class="title-container">
+                <div class="date" id="currentDate"><!-- Date will be set dynamically --></div>
+                <h1 class="main-title">TASK HARVEST</h1>
+                <div class="subtitle">DAILY PRODUCTIVITY LEDGER</div>
+            </div>
+            <div class="right-corner">
+                <div>Tasks Completed</div>
+                <div>Today: <span id="todayCompleted">0</span></div>
+                <div>Total: <span id="totalCompleted">0</span></div>
+            </div>
+        </div>
+
+        <div class="nav">
+            <div class="nav-item active" data-tab="tasks">TASKS</div>
+            <div class="nav-item" data-tab="projects">PROJECTS</div>
+            <div class="nav-item" data-tab="calendar">CALENDAR</div>
+            <div class="nav-item" data-tab="archive">ARCHIVE</div>
+        </div>
+
+        <div class="main-content">
+            <!-- Tasks Tab Content -->
+            <div class="tab-content active" id="tasks-content">
+                <div class="tasks-container">
+                    <h2 class="section-header">TASKS OF THE DAY</h2>
+                    <p class="section-subtitle">FROM PLANNING TO COMPLETION</p>
+
+                    <div class="task-input-container">
+                        <input type="text" class="task-input" id="quickAddTask" placeholder="Add a new task...">
+                        <button class="add-btn" id="quickAddBtn">ADD</button>
+                    </div>
+
+                    <ul class="task-list" id="taskList">
+                        <!-- Tasks will be added here dynamically -->
+                    </ul>
+
+                    <div class="empty-state" id="emptyState">
+                        <p>No tasks available. Add your first task to begin.</p>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <button class="action-btn" id="addTaskBtn">+ NEW DETAILED TASK</button>
+
+                    <div class="filter-container">
+                        <div class="filter-header">TASK FILTERS</div>
+                        <div class="filter-options">
+                            <div class="filter-option active" data-filter="all">
+                                <span class="filter-checkbox"></span>
+                                All Tasks
+                            </div>
+                            <div class="filter-option" data-filter="active">
+                                <span class="filter-checkbox"></span>
+                                Active Tasks
+                            </div>
+                            <div class="filter-option" data-filter="completed">
+                                <span class="filter-checkbox"></span>
+                                Completed Tasks
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="filter-header">DAILY PROGRESS</div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span id="progressPercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressBar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="instructions-container">
+                        <div class="filter-header">TASK NOTES</div>
+                        <p>Use priority levels to organize your tasks effectively.</p>
+                        <p>High priority tasks are marked with a bold border on the left.</p>
+                        <p>Click on task titles to expand and see additional details.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Tab Content -->
+            <div class="tab-content" id="projects-content">
+                <div class="tasks-container">
+                    <h2 class="section-header">PROJECT ROSTER</h2>
+                    <p class="section-subtitle">ONGOING INITIATIVES & CAMPAIGNS</p>
+
+                    <div class="projects-list">
+                        <div class="project-item">
+                            <div class="project-header">
+                                <h3 class="project-title">Website Redesign</h3>
+                                <span class="project-status in-progress">IN PROGRESS</span>
+                            </div>
+                            <div class="project-meta">
+                                <span>Due: Mar 15, 2025</span>
+                                <span>Tasks: 8/12 completed</span>
+                            </div>
+                            <div class="project-progress">
+                                <div class="project-progress-bar">
+                                    <div class="project-progress-fill" style="width: 66%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-item">
+                            <div class="project-header">
+                                <h3 class="project-title">Annual Marketing Plan</h3>
+                                <span class="project-status completed">COMPLETED</span>
+                            </div>
+                            <div class="project-meta">
+                                <span>Completed: Jan 31, 2025</span>
+                                <span>Tasks: 15/15 completed</span>
+                            </div>
+                            <div class="project-progress">
+                                <div class="project-progress-bar">
+                                    <div class="project-progress-fill" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-item">
+                            <div class="project-header">
+                                <h3 class="project-title">Product Launch</h3>
+                                <span class="project-status at-risk">AT RISK</span>
+                            </div>
+                            <div class="project-meta">
+                                <span>Due: Apr 10, 2025</span>
+                                <span>Tasks: 5/20 completed</span>
+                            </div>
+                            <div class="project-progress">
+                                <div class="project-progress-bar">
+                                    <div class="project-progress-fill" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <button class="action-btn">+ NEW PROJECT</button>
+
+                    <div class="filter-container">
+                        <div class="filter-header">PROJECT FILTERS</div>
+                        <div class="filter-options">
+                            <div class="filter-option active">
+                                <span class="filter-checkbox"></span>
+                                All Projects
+                            </div>
+                            <div class="filter-option">
+                                <span class="filter-checkbox"></span>
+                                Active Projects
+                            </div>
+                            <div class="filter-option">
+                                <span class="filter-checkbox"></span>
+                                Completed Projects
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-legend">
+                        <div class="filter-header">STATUS GUIDE</div>
+                        <div class="legend-item">
+                            <span class="legend-color in-progress"></span>
+                            <span>In Progress - On Schedule</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color at-risk"></span>
+                            <span>At Risk - Behind Schedule</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color completed"></span>
+                            <span>Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Tab Content -->
+            <div class="tab-content" id="calendar-content">
+                <div class="tasks-container">
+                    <h2 class="section-header">SCHEDULE OVERVIEW</h2>
+                    <p class="section-subtitle">UPCOMING EVENTS & DEADLINES</p>
+
+                    <div class="calendar-header">
+                        <button class="calendar-nav">&lt;</button>
+                        <h3 class="calendar-title">FEBRUARY 2025</h3>
+                        <button class="calendar-nav">&gt;</button>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-days">
+                            <div class="calendar-day-header">SUN</div>
+                            <div class="calendar-day-header">MON</div>
+                            <div class="calendar-day-header">TUE</div>
+                            <div class="calendar-day-header">WED</div>
+                            <div class="calendar-day-header">THU</div>
+                            <div class="calendar-day-header">FRI</div>
+                            <div class="calendar-day-header">SAT</div>
+                        </div>
+                        <div class="calendar-dates">
+                            <div class="calendar-date prev-month">28</div>
+                            <div class="calendar-date prev-month">29</div>
+                            <div class="calendar-date prev-month">30</div>
+                            <div class="calendar-date prev-month">31</div>
+                            <div class="calendar-date">1</div>
+                            <div class="calendar-date">2</div>
+                            <div class="calendar-date">3</div>
+                            <div class="calendar-date">4</div>
+                            <div class="calendar-date">5</div>
+                            <div class="calendar-date">6</div>
+                            <div class="calendar-date">7</div>
+                            <div class="calendar-date">8</div>
+                            <div class="calendar-date">9</div>
+                            <div class="calendar-date">10</div>
+                            <div class="calendar-date">11</div>
+                            <div class="calendar-date">12</div>
+                            <div class="calendar-date">13</div>
+                            <div class="calendar-date">14</div>
+                            <div class="calendar-date">15</div>
+                            <div class="calendar-date">16</div>
+                            <div class="calendar-date">17</div>
+                            <div class="calendar-date">18</div>
+                            <div class="calendar-date">19</div>
+                            <div class="calendar-date">20</div>
+                            <div class="calendar-date">21</div>
+                            <div class="calendar-date">22</div>
+                            <div class="calendar-date">23</div>
+                            <div class="calendar-date">24</div>
+                            <div class="calendar-date current-date">25</div>
+                            <div class="calendar-date has-events">26</div>
+                            <div class="calendar-date has-events">27</div>
+                            <div class="calendar-date">28</div>
+                            <div class="calendar-date next-month">1</div>
+                            <div class="calendar-date next-month">2</div>
+                            <div class="calendar-date next-month">3</div>
+                        </div>
+                    </div>
+
+                    <div class="upcoming-events">
+                        <h3 class="events-header">UPCOMING EVENTS</h3>
+                        <div class="event-item">
+                            <div class="event-date">FEB 26</div>
+                            <div class="event-details">
+                                <h4 class="event-title">Team Meeting</h4>
+                                <p class="event-time">10:00 AM - 11:30 AM</p>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">FEB 26</div>
+                            <div class="event-details">
+                                <h4 class="event-title">Project Deadline</h4>
+                                <p class="event-time">5:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">FEB 27</div>
+                            <div class="event-details">
+                                <h4 class="event-title">Client Presentation</h4>
+                                <p class="event-time">2:00 PM - 3:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <button class="action-btn">+ NEW EVENT</button>
+
+                    <div class="filter-container">
+                        <div class="filter-header">EVENT FILTERS</div>
+                        <div class="filter-options">
+                            <div class="filter-option active">
+                                <span class="filter-checkbox"></span>
+                                All Events
+                            </div>
+                            <div class="filter-option">
+                                <span class="filter-checkbox"></span>
+                                Meetings
+                            </div>
+                            <div class="filter-option">
+                                <span class="filter-checkbox"></span>
+                                Deadlines
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reminders-container">
+                        <div class="filter-header">REMINDERS</div>
+                        <div class="reminder-list">
+                            <div class="reminder-item">
+                                <span class="reminder-time">10:00 AM</span>
+                                <span class="reminder-text">Team Meeting</span>
+                            </div>
+                            <div class="reminder-item">
+                                <span class="reminder-time">5:00 PM</span>
+                                <span class="reminder-text">Project Deadline</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archive Tab Content -->
+            <div class="tab-content" id="archive-content">
+                <div class="tasks-container">
+                    <h2 class="section-header">TASK ARCHIVES</h2>
+                    <p class="section-subtitle">COMPLETED HISTORICAL RECORDS</p>
+
+                    <div class="archive-header">
+                        <div class="archive-selector">
+                            <label for="archiveMonth">Month:</label>
+                            <select id="archiveMonth">
+                                <option value="january">January 2025</option>
+                                <option value="february" selected>February 2025</option>
+                                <option value="previous">Previous Months</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="archive-summary">
+                        <div class="summary-box">
+                            <span class="summary-number">42</span>
+                            <span class="summary-label">Tasks Completed</span>
+                        </div>
+                        <div class="summary-box">
+                            <span class="summary-number">87%</span>
+                            <span class="summary-label">Completion Rate</span>
+                        </div>
+                        <div class="summary-box">
+                            <span class="summary-number">3</span>
+                            <span class="summary-label">Projects Finished</span>
+                        </div>
+                    </div>
+
+                    <div class="archive-list">
+                        <div class="archive-date-header">FEBRUARY 24, 2025</div>
+                        <div class="archive-item">
+                            <div class="archive-item-check">✓</div>
+                            <div class="archive-item-text">Complete quarterly report draft</div>
+                            <div class="archive-item-time">4:32 PM</div>
+                        </div>
+                        <div class="archive-item">
+                            <div class="archive-item-check">✓</div>
+                            <div class="archive-item-text">Schedule team meeting for next week</div>
+                            <div class="archive-item-time">2:15 PM</div>
+                        </div>
+
+                        <div class="archive-date-header">FEBRUARY 23, 2025</div>
+                        <div class="archive-item">
+                            <div class="archive-item-check">✓</div>
+                            <div class="archive-item-text">Review website mockups</div>
+                            <div class="archive-item-time">5:45 PM</div>
+                        </div>
+                        <div class="archive-item">
+                            <div class="archive-item-check">✓</div>
+                            <div class="archive-item-text">Send invoice to client</div>
+                            <div class="archive-item-time">11:20 AM</div>
+                        </div>
+                        <div class="archive-item">
+                            <div class="archive-item-check">✓</div>
+                            <div class="archive-item-text">Order office supplies</div>
+                            <div class="archive-item-time">9:05 AM</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <button class="action-btn">DOWNLOAD REPORT</button>
+
+                    <div class="filter-container">
+                        <div class="filter-header">ARCHIVE FILTERS</div>
+                        <div class="filter-options">
+                            <div class="filter-option active">
+                                <span class="filter-checkbox"></span>
+                                All Tasks
+                            </div>
+                            <div class="filter-option">
+                                <span class="filter-checkbox"></span>
+                                High Priority
+                            </div>
+                            <div class="filter-option">
+                                <span class="filter-checkbox"></span>
+                                Project-Related
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-container">
+                        <div class="filter-header">PRODUCTIVITY TRENDS</div>
+                        <div class="analytics-chart">
+                            <div class="chart-bar-container">
+                                <div class="chart-label">Mon</div>
+                                <div class="chart-bar">
+                                    <div class="chart-bar-fill" style="height: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="chart-bar-container">
+                                <div class="chart-label">Tue</div>
+                                <div class="chart-bar">
+                                    <div class="chart-bar-fill" style="height: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="chart-bar-container">
+                                <div class="chart-label">Wed</div>
+                                <div class="chart-bar">
+                                    <div class="chart-bar-fill" style="height: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="chart-bar-container">
+                                <div class="chart-label">Thu</div>
+                                <div class="chart-bar">
+                                    <div class="chart-bar-fill" style="height: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="chart-bar-container">
+                                <div class="chart-label">Fri</div>
+                                <div class="chart-bar">
+                                    <div class="chart-bar-fill" style="height: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Task Modal -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">ADD NEW TASK</div>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <input type="hidden" id="taskId">
+                    <div class="form-group">
+                        <label for="taskTitle">Task Title</label>
+                        <input type="text" id="taskTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" id="dueDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <div class="priority-selector">
+                            <div class="priority-option" data-priority="low">Low</div>
+                            <div class="priority-option selected" data-priority="medium">Medium</div>
+                            <div class="priority-option" data-priority="high">High</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskCategory">Category</label>
+                        <select id="taskCategory">
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="health">Health</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskRepeat">Repeat</label>
+                        <select id="taskRepeat">
+                            <option value="none">Never</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-btn cancel-btn" id="cancelTask">CANCEL</button>
+                <button type="button" class="modal-btn save-btn" id="saveTask">SAVE TASK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>]
 </body>
 
 </html>
